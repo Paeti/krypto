@@ -1,15 +1,15 @@
+#!/usr/bin/env python3
+__author__      = "Patrick Reckeweg"
+__copyright__   = ""
+
 import math
 from random import *
 import matplotlib as mlp
 import matplotlib.pyplot as plt
 import array as arr
 
-
-def gcd_rek(a, b : int) -> int:
-    if b == 0:
-        return a
-    c = a % b
-    return gcd_rek(b, c)
+def gcd_rek(a, b :int) -> int:
+    return a if b == 0 else gcd_rek(b, a % b)
 
 def gcd_it(x, y: int) -> int:
     while(y):
@@ -24,12 +24,7 @@ def gcd_steps(x,y: int) -> int:
     return z
 
 def gcd_mid_stp_num(anz, n: int) -> float:
-    z = 0
-    for i in range(anz):
-        a = randint(0, n)
-        b = randint(0, n)
-        z += gcd_steps(a, b)
-    return z/anz
+    return sum([gcd_steps(rand(0, n), rand(0, n)) for i in range(anz)]) / anz
 
 def runtime(a, b: int) -> int:
     return log(a*b)**3
@@ -73,11 +68,16 @@ def experiment(anz, stellen: int) -> arr.array('f'):
     y = arr.array('f', [])
     for i in range(1,stellen):
         y.append(gcd_mid_stp_num(anz, 10**i -1))
-    return y    
+    return y
 
 y = experiment(1000, 10)
 # Wertebereich für x-Achse festlegen:
 x = [0, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000]
+
+0, 1000000000, 0, 30 = plt.axis('equal')
+
+#disable autoscaling the axis
+plt.autoscale(False)
 
 # Einzelne Diagramm-Linien plotten:
 plt.plot(x, y, 'r--')
