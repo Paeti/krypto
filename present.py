@@ -5,4 +5,7 @@ __copyright__   = ""
 import draw
 
 draw.output_examples()
-draw.draw_experiment()
+#draw.draw_experiment()
+draw.output_examples_equ(10)
+print("__________________________________________")
+draw.output_given_examples_equ()

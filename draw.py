@@ -4,8 +4,10 @@ __copyright__   = ""
 
 import matplotlib as mlp
 import matplotlib.pyplot as plt
-import euklid_algo as euc
+from random import *
 import array as arr
+import euklid_algo as euc
+
 
 def output_examples():
     print("Der gcd(282, 240) rekursiv berechnet: " , euc.gcd_rek(282, 240))
@@ -54,3 +56,24 @@ def draw_experiment():
 
     plt.show()
 
+def print_fail(c, d, m: int):
+    print("Es gibt keine Loesung fuer " + str(c) + "*x = " + str(d) + " mod " + str(m) )
+
+def test_result(c, d, m, x: int):
+    if (c*x)%m == d%m:
+        print("Test bestanden, die Losung ist: " + str(c) + "*" + str(x)
+              + " = " + str(d) + " mod " + str(m))
+    else:
+        print("Da ist wohl was schief gelaufen")
+
+def output_examples_equ(a: int):
+    for i in range (a):
+        c, d, m = randint(0, 999), randint(0, 999), randint(0, 999)
+        x =  euc.solve_equ(c, d, m)
+        print_fail(c, d, m) if x == -1 else  test_result(c, d, m, x)
+
+def output_given_examples_equ():
+    giv_ex = [[25, 13, 61], [86, 13, 61], [19, 14, 61], [6, 3, 15], [6, 3, 18], [9**100 +1, 8**100 +1, 10**100 +1]]
+    for i in giv_ex:
+        x = euc.solve_equ(i[0], i[1], i[2])
+        print_fail(i[0], i[1], i[2]) if x == -1 else test_result(i[0], i[1], i[2], x)

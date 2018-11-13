@@ -41,9 +41,21 @@ def experiment_stellen(anz, stellen: int) -> arr.array('f'):
         y.append(gcd_mid_stp_num_range(anz, 10**(i-1), 10**i -1))
     return y
 
-#def egcd():
+def egcd_it(b, a: int) -> [int, int, int]:
+    x0, x1, y0, y1 = 1, 0, 0, 1
+    while(a):
+        q, b, a = b // a, a, b % a
+        x0, x1 = x1, x0 - q * x1
+        y0, y1 = y1, y0 - q * y1
+    return  [b, x0, y0]
 
-#def calc_inv(a, b: int) -> int:
-#   if gcd_it(a, b) != 1:
-# return -1
-    
+def solve_equ(c, d, m: int) -> int:
+    #gcd(c, m)
+    #d%gcd != 0 return -1
+    if (d%gcd_it(c, m)) != 0:
+        return -1
+
+    #egcd, x nehmen (d/gcd)*x = p, return p%m
+    t = egcd_it(c, m)
+    x = (t[1]*(d//t[0]))%m 
+    return x
