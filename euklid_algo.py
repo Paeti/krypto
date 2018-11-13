@@ -24,10 +24,12 @@ def gcd_steps(x,y: int) -> int:
     return z
 
 def gcd_mid_stp_num(anz, n: int) -> float:
-    return sum([gcd_steps(rand(0, n), rand(0, n)) for i in range(anz)]) / anz
+    return sum([gcd_steps(randint(0, n), randint(0, n)) for i in range(anz)]) / anz
 
-def runtime(a, b: int) -> int:
-    return log(a*b)**3
+def gcd_mid_stp_num_range(anz, m, n: int) -> float:
+    return sum([gcd_steps(randint(m, n), randint(m, n)) for i in range(anz)]) / anz
+
+
 
 def calc_inv(a, b: int) -> int:
     if gcd_it(a, b) != 1:
@@ -39,28 +41,6 @@ print("Der gcd(282, 240) rekursiv berechnet: " , gcd_rek(282, 240))
 print("Der gcd(282, 240) iterativ berechnet: " , gcd_it(282, 240))
 print("Der gcd(9**100 +1, 10**100 +1) iterativ berechnet: "
       , gcd_it(9**100 +1, 10**100 +1 ))
-print("Die gcd_steps(9**100 +1, 10**100 +1) iterativ berechnet: "
-      , gcd_steps(9**100 +1, 10**100 +1 ))
-print("Die mittlere gcd_steps bei Zahlen zwischen 0 und 9"
-      , gcd_mid_stp_num(10000, 9))
-print("Die mittlere gcd_steps bei Zahlen zwischen 0 und 9"
-      , gcd_mid_stp_num(10000, 99))
-print("Die mittlere gcd_steps bei Zahlen zwischen 0 und 9"
-      , gcd_mid_stp_num(10000, 999))
-print("Die mittlere gcd_steps bei Zahlen zwischen 0 und 9"
-      , gcd_mid_stp_num(10000, 9999))
-print("Die mittlere gcd_steps bei Zahlen zwischen 0 und 9"
-      , gcd_mid_stp_num(10000, 99999))
-print("Die mittlere gcd_steps bei Zahlen zwischen 0 und 9"
-      , gcd_mid_stp_num(10000, 999999))
-print("Die mittlere gcd_steps bei Zahlen zwischen 0 und 9"
-      , gcd_mid_stp_num(10000, 9999999))
-print("Die mittlere gcd_steps bei Zahlen zwischen 0 und 9"
-      , gcd_mid_stp_num(10000, 99999999))
-print("Die mittlere gcd_steps bei Zahlen zwischen 0 und 9"
-      , gcd_mid_stp_num(10000, 999999999))
-print("Die mittlere gcd_steps bei Zahlen zwischen 0 und 9"
-      , gcd_mid_stp_num(10000, 9999999999))
 
 #anz ist die Anzahl der zufaelligen Ziehungen
 #stellen ist die Anzahl der Dezimalstellen
@@ -71,19 +51,56 @@ def experiment(anz, stellen: int) -> arr.array('f'):
     return y
 
 y = experiment(1000, 10)
+
 # Wertebereich für x-Achse festlegen:
-x = [0, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000]
+x = arr.array('i', [10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000])
 
-0, 1000000000, 0, 30 = plt.axis('equal')
+print(x)
+print(y)
 
-#disable autoscaling the axis
-plt.autoscale(False)
+def experiment_stellen(anz, stellen: int) -> arr.array('f'):
+    y = arr.array('f', [])
+    for i in range(1,stellen):
+        y.append(gcd_mid_stp_num_range(anz, 10**(i-1), 10**i -1))
+    return y
 
-# Einzelne Diagramm-Linien plotten:
-plt.plot(x, y, 'r--')
+z = experiment_stellen(1000, 10)
 
-# Diagramm-Gitter einblenden:
+print(x)
+print(z)
+
+a = arr.array('i', [1, 2, 3, 4, 5, 6, 7, 8, 9])
+b = [10**i for i in range (1,10)]
+
+plt.subplot(211)
+plt.plot(x, y, 'r--', x, z, 'g--')
+plt.xlim([1, 10**9])
+plt.ylim([0, 18])
+plt.xscale("linear")
 plt.grid(True)
 
-# Diagramm ausgeben:
+plt.subplot(212)
+plt.plot(x, y, 'r--', x, z, 'g--')
+plt.xscale("log", nonposx = "clip")
+plt.yscale("linear")
+plt.xlim([10, 10**9])
+plt.ylim([0, 18])
+plt.grid(True)
+
 plt.show()
+
+plt.subplot(211)
+plt.plot(a, b, 'y--')
+plt.xlim(1, 9)
+plt.ylim(0, 10**9)
+plt.grid(True)
+
+plt.subplot(212)
+plt.plot(a, b, 'y--')
+plt.xlim(1, 9)
+plt.ylim(10**1, 10**9)
+plt.yscale("log")
+plt.grid(True)
+
+plt.show()
+
