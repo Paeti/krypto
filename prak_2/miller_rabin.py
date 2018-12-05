@@ -41,6 +41,15 @@ def is_Prime(n, it):
 
     return True
 
+def trial_composite(a, d, n, s):
+    if pow(a, d, n) == 1:
+        return False
+    for i in range(s):
+        if pow(a, 2**i * d, n) == n-1:
+            return False
+    return True
+
+
 def miller_rabin(n, it):
     if n != int(n) or n < 2:
             return False
@@ -60,22 +69,19 @@ def miller_rabin(n, it):
 
 def ist_zeuge(a, n):
     m = n - 1
+    if pow(a, m, n) != 1:
+        True
+
     while m % 2 == 0:
+        m = m // 2
         if pow(a, m, n) == n - 1:
+            print("bli" + str(a) + " " + str(m) + " " + str(n) + " " + str(pow(a, m, n)))
             return False
         if pow(a, m, n) != 1:
+            print("bla" + str(a) + " " + str(m) + " " + str(n) + " " + str(pow(a, m, n)))
             return True
-        m = m // 2
+        #m = m // 2
     return False
-
-
-def trial_composite(a, d, n, s):
-    if pow(a, d, n) == 1:
-        return False
-    for i in range(s):
-        if pow(a, 2**i * d, n) == n-1:
-            return False
-    return True
 
 
 def next_prime(n, it):
@@ -108,5 +114,14 @@ print(next_prime(17,5))
 print(next_prime(32,5))
 print(next_prime(10**100, 10))
 
-for i in range(0, 50):
-    print(str(i) + "   " + str(miller_rabin(i, 2)))
+#for i in range(0, 50):
+ #   print(str(i) + "   " + str(miller_rabin(i, i)))
+
+#print(ist_zeuge(24, 29))
+print(ist_zeuge(2, 10))
+print(ist_zeuge(3, 10))
+print(ist_zeuge(4, 10))
+print(ist_zeuge(5, 10))
+print(ist_zeuge(6, 10))
+print(ist_zeuge(7, 10))
+print(ist_zeuge(8, 10))
