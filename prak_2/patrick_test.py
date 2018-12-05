@@ -22,9 +22,9 @@ class TestCryptoMethods(unittest.TestCase):
         self.assertEqual(miller_rabin.next_prime_mil_rab(10**100, 10), 10**100 + 267)
 
 
-    def test_anz_zeugen(self):
-        self.assertEqual(miller_rabin.anz_zeugen(9), 6)
-        self.assertEqual(miller_rabin.anz_zeugen(325), 306)
+   # def test_anz_zeugen(self):
+    #    self.assertEqual(miller_rabin.anz_zeugen(9), 6)
+     #   self.assertEqual(miller_rabin.anz_zeugen(325), 306)
 
 if __name__ == '__main__':
     unittest.main()
