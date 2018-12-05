@@ -61,26 +61,32 @@ def miller_rabin(n, it):
     if n==2 or n==3 or n==5 or n==7:
             return True
     for i in range(it):#number of trials
-        a = random.randrange(2, n - 1)
+        a = random.randint(2, n - 2)
         if ist_zeuge(a, n):
             return False
+    #print("uff")
     return True
 
 
 def ist_zeuge(a, n):
-    m = n - 1
-    if pow(a, m, n) != 1:
-        True
-
-    while m % 2 == 0:
-        m = m // 2
-        if pow(a, m, n) == n - 1:
-            print("bli" + str(a) + " " + str(m) + " " + str(n) + " " + str(pow(a, m, n)))
+    k = n - 1
+    if pow(a, n - 1, n) != 1:
+        return True
+    while True:
+        k >>= 1
+        #print("while, k = " + str(k))
+        if k % 2 != 0:
+            #print("ungerades k")
             return False
-        if pow(a, m, n) != 1:
-            print("bla" + str(a) + " " + str(m) + " " + str(n) + " " + str(pow(a, m, n)))
-            return True
-        #m = m // 2
+    #while k % 2 == 0:
+        if pow(a, k, n) != 1:
+            #print("!= 1 => " + str(pow(a, k, n)))
+            if pow(a, k, n) == n - 1:
+                return False
+            else:
+                return True
+        #k >>= 1
+    #print("a = " + str(a) + ", k = " + str(k))
     return False
 
 
@@ -95,33 +101,33 @@ def next_prime(n, it):
             n += 2
 
 
-#def anz_zeugen(n):
- #   anz = 0
-  #  for i in range(1, n - 1):
-   #     if trial_composite(i, n - 1, ):
+def next_prime_mil_rab(n, it):
+    if(n % 2 == 0):
+        n += 1
+    while True:
+        pos_prim = miller_rabin(n, it)
+        if(pos_prim == True):
+            return n
+        else:
+            n += 2
 
 
-print(is_Prime(13, 2))
-print(is_Prime(41, 3))
-print(is_Prime(242454656665753, 300))
 
-print(miller_rabin(13, 2))
-print(miller_rabin(41, 3))
-print(miller_rabin(242454656665753, 300))
+#print(is_Prime(13, 5))
+#print(is_Prime(41, 15))
+#print(is_Prime(242454656665753, 300))
 
+#print(miller_rabin(13, 5))
+#print(miller_rabin(41, 15))
+#print(miller_rabin(242454656665753, 300))
+#print(miller_rabin(34, 5))
 
-print(next_prime(17,5))
-print(next_prime(32,5))
-print(next_prime(10**100, 10))
+#print(next_prime(17,5))
+#print(next_prime(32,5))
+#print(next_prime(10**100, 10))
 
-#for i in range(0, 50):
- #   print(str(i) + "   " + str(miller_rabin(i, i)))
+#print(ist_zeuge(54, 58))
+#for i in range (1, 50):
+ #   print(str(i) + "    " + str(miller_rabin(i, 20)))
 
-#print(ist_zeuge(24, 29))
-print(ist_zeuge(2, 10))
-print(ist_zeuge(3, 10))
-print(ist_zeuge(4, 10))
-print(ist_zeuge(5, 10))
-print(ist_zeuge(6, 10))
-print(ist_zeuge(7, 10))
-print(ist_zeuge(8, 10))
+#print(miller_rabin(99054, 300))
